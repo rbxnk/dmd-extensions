@@ -230,6 +230,18 @@ namespace LibDmd.DmdDevice
 				renderers.Add(_dmd.Dmd);
 				Logger.Info("Added VirtualDMD renderer.");
 			}
+            if (_config.Bmp.Enabled) {
+                var rootPath = "";
+                if( _config.Bmp.Path.Length == 0 || !Path.IsPathRooted( _config.Bmp.Path ) ) {
+                    rootPath = AssemblyPath;
+                }
+                if( Directory.Exists( Path.Combine( rootPath, _config.Bmp.Path ) ) ) {
+                    renderers.Add( new BitmapOutput( Path.Combine( rootPath, _config.Bmp.Path ) ) );
+                    Logger.Info( "Added bmp renderer." );
+                } else {
+                    Logger.Warn( "Ignoring bmp renderer for non-existing path \"{0}\"", _config.Bmp.Path );
+                }
+            }
 			if (_config.Video.Enabled) {
 
 				var rootPath = "";
