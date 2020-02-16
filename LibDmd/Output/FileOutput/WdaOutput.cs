@@ -31,7 +31,7 @@ namespace LibDmd.Output.FileOutput
 		public WdaOutput(string outputFolder, string gameName)
 		{
 			OutputFolder = outputFolder;
-            string fileName = $"{gameName}.{DateTime.Now.TimeOfDay.TotalSeconds}.{DateTime.Now.DayOfYear}.{DateTime.Now.Year}.wda";
+            string fileName = $"{gameName}.{(uint)DateTime.Now.TimeOfDay.TotalSeconds}.{DateTime.Now.DayOfYear}.{DateTime.Now.Year}.wda";
             _wdaFile = File.Create( Path.Combine( OutputFolder, fileName ) );
             _wdaWriter = new BinaryWriter( _wdaFile );
             _stopwatch.Start();
