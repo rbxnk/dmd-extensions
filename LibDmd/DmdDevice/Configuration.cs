@@ -18,7 +18,7 @@ namespace LibDmd.DmdDevice
 		public readonly PinDmd2Config PinDmd2;
 		public readonly PinDmd3Config PinDmd3;
 		public readonly Pin2DmdConfig Pin2Dmd;
-        public readonly BmpConfig Bmp;
+        public readonly WdaConfig Wda;
 		public readonly VideoConfig Video;
 		public readonly GifConfig Gif;
 		public string GameName {
@@ -71,7 +71,7 @@ namespace LibDmd.DmdDevice
 			PinDmd2 = new PinDmd2Config(_data, this);
 			PinDmd3 = new PinDmd3Config(_data, this);
 			Pin2Dmd = new Pin2DmdConfig(_data, this);
-            Bmp = new BmpConfig( _data, this );
+            Wda = new WdaConfig( _data, this );
 			Video = new VideoConfig(_data, this);
 			Gif = new GifConfig(_data, this);
 			VpdbStream = new VpdbConfig(_data, this);
@@ -174,11 +174,11 @@ namespace LibDmd.DmdDevice
 		}
 	}
 
-    public class BmpConfig : AbstractConfiguration {
-        public override string Name { get; } = "bmp";
+    public class WdaConfig : AbstractConfiguration {
+        public override string Name { get; } = "wda";
         public bool Enabled => GetBoolean( "enabled", false );
         public string Path => GetString( "path", "." );
-        public BmpConfig(IniData data, Configuration parent) : base(data, parent) { }
+        public WdaConfig(IniData data, Configuration parent) : base(data, parent) { }
     }
 
 	public class VideoConfig : AbstractConfiguration
