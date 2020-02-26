@@ -19,8 +19,13 @@ namespace LibDmd.Output.FileOutput
 		public string Name { get; } = "File Writer";
 		public bool IsAvailable { get; } = true;
 
-        private int _width = 128;
-        private int _height = 32;
+        private static readonly int _width = 128;
+        private static readonly int _height = 32;
+        private int _srcWidth = _width;
+        private int _srcHeight = _height;
+
+        private static readonly int _scratchFrameSize = _width * _height * 3;
+        private byte[] _scratchFrame = new byte[_scratchFrameSize];
 		private string _prevHash;
         private FileStream _wdaFile;
         private BinaryWriter _wdaWriter;
@@ -42,12 +47,12 @@ namespace LibDmd.Output.FileOutput
 		}
 
         public void SetDimensions( int width, int height ) {
-            if( _wroteHeader && (width != _width || height != _height) ) {
+            if( width > _width || height > _height ) {
                 CloseFile();
                 return;
             }
-            _width = width;
-            _height = height;
+            _srcWidth = width;
+            _srcHeight = height;
 
             if( !_wroteHeader ) {
                 WriteHeader();
@@ -72,7 +77,19 @@ namespace LibDmd.Output.FileOutput
             _wdaWriter.Write( (byte)0 );
             _wdaWriter.Write( (byte)0 );
             _wdaWriter.Write( (byte)0 );
-            _wdaWriter.Write( frame, 0, _width * _height * 3 );
+            if( _srcWidth == _width && _srcHeight == _height ) {
+                _wdaWriter.Write( frame, 0, _width * _height * 3 );
+            } else {
+                Array.Clear( _scratchFrame, 0, _scratchFrameSize );
+                int srcStride = _srcWidth * 3;
+                int dstStride = _width * 3;
+                for( int y = 0; y < _srcHeight; y++ ) {
+                    int src = y * srcStride;
+                    int dst = y * dstStride;
+                    Array.Copy( frame, src, _scratchFrame, dst, srcStride );
+                }
+                _wdaWriter.Write( _scratchFrame, 0, _width * _height * 3 );
+            }
         }
 
         public void SetColor( Color color ) {
