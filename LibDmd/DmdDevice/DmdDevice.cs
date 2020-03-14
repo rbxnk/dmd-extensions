@@ -370,7 +370,7 @@ namespace LibDmd.DmdDevice
 			} else {
 				Logger.Info("Applying default color to render graphs ({0}).", _color);
 				_graphs.ClearPalette();
-				_graphs.SetColor(_color);
+				_graphs.SetColor(_color, _config.VirtualDmd.MinBrightness);
 			}
 
 			_graphs.Init().StartRendering();

@@ -130,7 +130,7 @@ namespace LibDmd.Common
 		/// <param name="palette">Color to assign to each gray shade</param>
 		/// <param name="numColors">Number of shades to return</param>
 		/// <returns></returns>
-		public static Color[] GetPalette(Color[] palette, int numColors)
+		public static Color[] GetPalette(Color[] palette, int numColors, double minBrightness = 0.0)
 		{
 			if (palette.Length == 0) {
 				return null;
@@ -162,7 +162,7 @@ namespace LibDmd.Common
 				var fromColorStart = palette[fromRasterPos];
 				var fromColorEnd = palette[fromRasterPos + 1];
 
-				interpolatedPalette[toRasterPos] = MixColors(fromColorStart, fromColorEnd, relativePos);
+				interpolatedPalette[toRasterPos] = MixColors( fromColorStart, fromColorEnd, (relativePos > 0f ? (relativePos * (1.0 - minBrightness)) + minBrightness : 0f) );
 
 				while (fromRasterSize * (fromRasterPos + 1) < toRasterSize * (toRasterPos + 1)) {
 					fromRasterPos++;

@@ -31,7 +31,7 @@ namespace DmdExt.Mirror
 				IdleAfter = _options.IdleAfter,
 				IdlePlay = _options.IdlePlay
 			};
-			_graph.SetColor(ColorUtil.ParseColor(_options.RenderColor));
+			_graph.SetColor(ColorUtil.ParseColor(_options.RenderColor), 0.0);
 
 			// setup source and additional processors
 			switch (_options.Source) {

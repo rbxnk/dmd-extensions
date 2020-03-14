@@ -168,6 +168,7 @@ namespace LibDmd.DmdDevice
 		public double Width => GetDouble("width", 1024);
 		public double Height => GetDouble("height", 256);
 		public double DotSize => GetDouble("dotsize", 1.0);
+		public double MinBrightness => GetDouble( "minbrightness", 0.0 );
 
 		public VirtualDmdConfig(IniData data, Configuration parent) : base(data, parent)
 		{

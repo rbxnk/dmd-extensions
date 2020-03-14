@@ -63,9 +63,9 @@ namespace LibDmd
 			_graphs.ForEach(graph => graph.StartRendering());
 		}
 
-		public void SetColor(Color color)
+		public void SetColor(Color color, double minBrightness)
 		{
-			_graphs.ForEach(graph => graph.SetColor(color));
+			_graphs.ForEach(graph => graph.SetColor(color, minBrightness) );
 			_rgb24Destinations.ForEach(dest => dest.SetColor(color));
 		}
 

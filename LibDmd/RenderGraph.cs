@@ -966,10 +966,10 @@ namespace LibDmd
 		/// Sets the color with which a grayscale source is rendered on the RGB display.
 		/// </summary>
 		/// <param name="color">Rendered color</param>
-		public void SetColor(Color color)
+		public void SetColor(Color color, double minBrightness)
 		{
-			_gray2Colors = ColorUtil.GetPalette(new []{Colors.Black, color}, 4);
-			_gray4Colors = ColorUtil.GetPalette(new []{Colors.Black, color}, 16);
+			_gray2Colors = ColorUtil.GetPalette(new []{Colors.Black, color}, 4, minBrightness);
+			_gray4Colors = ColorUtil.GetPalette(new []{Colors.Black, color}, 16, minBrightness);
 		}
 
 		/// <summary>
@@ -997,7 +997,7 @@ namespace LibDmd
 		/// </summary>
 		public void ClearColor()
 		{
-			SetColor(DefaultColor);
+			SetColor(DefaultColor, 0.0);
 		}
 
 		/// <summary>
